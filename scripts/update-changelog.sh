@@ -1,5 +1,9 @@
 #!/bin/bash
-set -euo pipefail
+if [ -n "${BASH_VERSION:-}" ]; then
+	set -euo pipefail
+else
+	set -eu
+fi
 
 # ── Configuration ───────────────────────────────────────────
 GIT_CLIFF_VERSION="2.8.0"
