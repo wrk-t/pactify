@@ -54,7 +54,9 @@ export const extractDecoratorThrows = (
       continue;
     }
 
-    const resolvedPath = resolveAliasPath(importPath, "");
+    // Resolve relative to the file that wrote the decorator: a bare "" base
+    // works for `paths` aliases but never for `../x/y` specifiers.
+    const resolvedPath = resolveAliasPath(importPath, sourceFilePath);
 
     if (!resolvedPath) {
       throw new Error(`Unable to resolve import: ${importPath}`);
