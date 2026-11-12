@@ -4,6 +4,7 @@ import { join } from "node:path";
 export const findFilesRecursive = (
 	dirPath: string,
 	condition: (filename: string) => boolean,
+	skipDir: (dirName: string) => boolean = () => false,
 ): string[] => {
 	const result: string[] = [];
 
@@ -16,6 +17,7 @@ export const findFilesRecursive = (
 				const stats = statSync(fullPath);
 
 				if (stats.isDirectory()) {
+					if (skipDir(entry)) continue;
 					walk(fullPath);
 				} else if (condition(entry)) {
 					result.push(fullPath);
